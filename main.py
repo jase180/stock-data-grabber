@@ -1,7 +1,7 @@
 import requests
 import os
 import csv
-from datetime import datetime, timezone
+import pandas
 
 
 # Polygon info
@@ -39,7 +39,7 @@ def fetch_data(url,file_path):
 
             for line in results:
                 row = [
-                    line.get("t"),  # Timestamp
+                    pd.to_datetime(line.get("t"), unit="ms"),  # Timestamp
                     line.get("o"),  # Open price
                     line.get("h"),  # High price
                     line.get("l"),  # Low price
@@ -59,6 +59,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-now = datetime.now(timezone.utc)
