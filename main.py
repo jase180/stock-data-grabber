@@ -12,6 +12,8 @@ data_folder = "data"
 file_name = "spy_data.csv"
 file_path = os.path.join(data_folder, file_name)
 
+# Make folder if it doesn't exist already
+os.makedirs(data_folder, exist_ok=True)
 
 def fetch_data(url,file_path):
     try:
@@ -25,6 +27,9 @@ def fetch_data(url,file_path):
         results = data.get("results", [])
         if not results:
             raise ValueError("No data found in the response!")
+
+        #Print number of results 
+        print(f"Number of results: {len(results)}")
         
         #Write to CSV file
         with open(file_path, mode="w", newline ="") as f:
@@ -41,7 +46,7 @@ def fetch_data(url,file_path):
                     line.get("c"),  # Close price
                     line.get("v"),  # Volume
                 ]
-            writer.writerow(row)
+                writer.writerow(row)
 
         print("Completed")
         
